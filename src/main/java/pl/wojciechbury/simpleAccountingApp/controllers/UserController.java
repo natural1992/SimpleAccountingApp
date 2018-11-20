@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.wojciechbury.simpleAccountingApp.models.UserSession;
 import pl.wojciechbury.simpleAccountingApp.models.forms.UserForm;
@@ -85,5 +86,38 @@ public class UserController {
 
         model.addAttribute("loginInfo", "Password incorrect");
         return "login";
+    }
+
+    @GetMapping("/user/configuration")
+    public String showUserConfiguration(Model model){
+        model.addAttribute("user", userSession.getUserEntity());
+
+        return "userConfiguration";
+    }
+
+    @GetMapping("/user/configuration/{var}")
+    public String changeUserConfiguration(@PathVariable("var") String option){
+        if(!userSession.isLoggedIn()){
+            return "redirect:/user/login";
+        }
+        if(option.equals("vatFalse")){
+            userSession.getUserEntity().setVatPayer(false);
+
+            return "redirect/user/configuration";
+        }else if(option.equals("vatTrue")){
+            userSession.getUserEntity().setVatPayer(true);
+
+            return "redirect/user/configuration";
+        }else if(option.equals("linearIncomeFalse")){
+            userSession.getUserEntity().setLinearIncomeTaxPayer(false);
+
+            return "redirect/user/configuration";
+        }else if(option.equals("linearIncomeTrue")){
+            userSession.getUserEntity().setVatPayer(true);
+
+            return "redirect/user/configuration";
+        }
+
+        return "redirect:/user/configuration";
     }
 }
