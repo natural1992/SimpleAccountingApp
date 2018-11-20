@@ -148,6 +148,10 @@ body{
 ::-moz-input-placeholder{
    color: rgba(255,255,255,0.6);
 }
+
+a{
+    text-decoration: none
+}
 </style>
 <body>
 <div class="body"></div>
@@ -163,6 +167,7 @@ body{
         <input type="text" th:field="*{city}" placeholder="City"><br/>
         <input type="submit" value="Register">
     </form>
+    <h1>Already a user?<span> </span><a href="/user/login">log in now!</a></h1>
 </div>
 </body>
 </html>

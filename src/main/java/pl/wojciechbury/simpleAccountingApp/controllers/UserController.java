@@ -36,17 +36,19 @@ public class UserController {
 
     @GetMapping("/user")
     public String showUserScreen(Model model){
-        if(!userSession.isLoggedIn()){
-            return "redirect:/user/login";
-        }
-        WeatherDto weather = weatherService.loadWeatherFor(userSession.getUserEntity().getCity());
-
         model.addAttribute("login", userSession.getUserEntity().getLogin());
         model.addAttribute("notes", noteService.getListOfNotesForToday());
-        model.addAttribute("weather", (int) weather.getTempDto().getTemperature());
-        model.addAttribute("clouds", (int) weather.getCloudsDto().getClouds());
-        model.addAttribute("date", LocalDate.now());
-        model.addAttribute("city", userSession.getUserEntity().getCity());
+
+        WeatherDto weather = weatherService.loadWeatherFor(userSession.getUserEntity().getCity());
+        if(weather == null){
+            model.addAttribute("isCityCorrect", false);
+        }else {
+            model.addAttribute("isCityCorrect", true);
+            model.addAttribute("weather", (int) weather.getTempDto().getTemperature() - 273);
+            model.addAttribute("clouds", (int) weather.getCloudsDto().getClouds());
+            model.addAttribute("date", LocalDate.now());
+            model.addAttribute("city", userSession.getUserEntity().getCity());
+        }
 
         return "userScreen";
     }
@@ -107,11 +109,15 @@ public class UserController {
         return "userConfiguration";
     }
 
+    @PostMapping("/user/configuration")
+    public String getUserConfiguration(@ModelAttribute String cityName){
+        userSession.getUserEntity().setCity(cityName);
+
+        return "userConfiguration";
+    }
+
     @GetMapping("/user/configuration/{var}")
     public String changeUserConfiguration(@PathVariable("var") String option){
-        if(!userSession.isLoggedIn()){
-            return "redirect:/user/login";
-        }
         if(option.equals("vatFalse")){
             userSession.getUserEntity().setVatPayer(false);
 
@@ -131,5 +137,13 @@ public class UserController {
         }
 
         return "redirect:/user/configuration";
+    }
+
+    @GetMapping("/user/logout")
+    public String logout(){
+        userSession.setUserEntity(null);
+        userSession.setLoggedIn(false);
+
+        return "redirect:/user/login";
     }
 }
