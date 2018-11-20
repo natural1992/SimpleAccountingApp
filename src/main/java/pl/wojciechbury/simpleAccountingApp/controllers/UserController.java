@@ -9,21 +9,29 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.wojciechbury.simpleAccountingApp.models.UserSession;
+import pl.wojciechbury.simpleAccountingApp.models.dtos.WeatherDto;
 import pl.wojciechbury.simpleAccountingApp.models.forms.UserForm;
+import pl.wojciechbury.simpleAccountingApp.models.services.NoteService;
 import pl.wojciechbury.simpleAccountingApp.models.services.UserService;
+import pl.wojciechbury.simpleAccountingApp.models.services.WeatherService;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 
 @Controller
 public class UserController {
 
     final UserService userService;
     final UserSession userSession;
+    final WeatherService weatherService;
+    final NoteService noteService;
 
     @Autowired
-    public UserController(UserSession userSession, UserService userService){
+    public UserController(UserSession userSession, UserService userService, WeatherService weatherService, NoteService noteService){
         this.userService = userService;
         this.userSession = userSession;
+        this.weatherService = weatherService;
+        this.noteService = noteService;
     }
 
     @GetMapping("/user")
@@ -31,7 +39,14 @@ public class UserController {
         if(!userSession.isLoggedIn()){
             return "redirect:/user/login";
         }
+        WeatherDto weather = weatherService.loadWeatherFor(userSession.getUserEntity().getCity());
+
         model.addAttribute("login", userSession.getUserEntity().getLogin());
+        model.addAttribute("notes", noteService.getListOfNotesForToday());
+        model.addAttribute("weather", (int) weather.getTempDto().getTemperature());
+        model.addAttribute("clouds", (int) weather.getCloudsDto().getClouds());
+        model.addAttribute("date", LocalDate.now());
+        model.addAttribute("city", userSession.getUserEntity().getCity());
 
         return "userScreen";
     }
@@ -58,6 +73,8 @@ public class UserController {
 
         if(!isSuchLogin){
             userService.addUser(userForm);
+            userService.tryLogin(userForm);
+
             return "redirect:/user";
         }else{
             model.addAttribute("registrationInfo", "This login is already taken");
@@ -73,18 +90,13 @@ public class UserController {
 
     @PostMapping("/user/login")
     public String getUserLogin(Model model, @ModelAttribute UserForm userForm){
-        if(!userService.isSuchLogin(userForm.getLogin())){
-            model.addAttribute("loginInfo", "There is no such login, please register");
-            return "login";
-        }
+        boolean didItLog = userService.tryLogin(userForm);
 
-        userService.tryLogin(userForm);
-
-        if(userSession.isLoggedIn()){
+        if(didItLog){
             return "redirect:/user";
         }
 
-        model.addAttribute("loginInfo", "Password incorrect");
+        model.addAttribute("loginInfo", "Login or password are incorrect");
         return "login";
     }
 

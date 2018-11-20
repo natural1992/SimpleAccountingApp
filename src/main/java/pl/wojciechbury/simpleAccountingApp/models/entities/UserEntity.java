@@ -19,13 +19,17 @@ public class UserEntity {
     @GeneratedValue
     private int id;
 
-    private String login, password;
-    private boolean isVatPayer, isLinearIncomeTaxPayer;
+    private String login;
+    private String password;
+    private String city;
+    private boolean isVatPayer;
+    private boolean isLinearIncomeTaxPayer;
 
     public UserEntity(UserForm userForm){
         this.login = userForm.getLogin();
         this.password = userForm.getPassword();
         this.isVatPayer = userForm.isVatPayer();
         this.isLinearIncomeTaxPayer = userForm.isLinearIncomeTaxPayer();
+        this.city = userForm.getCity();
     }
 }

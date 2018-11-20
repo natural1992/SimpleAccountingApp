@@ -14,5 +14,7 @@ public class UserForm {
     @Size(min = 5, max = 60)
     private String password;
 
-    private boolean isVatPayer, isLinearIncomeTaxPayer;
+    private String city;
+    private boolean isVatPayer;
+    private boolean isLinearIncomeTaxPayer;
 }

@@ -2,10 +2,10 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Create note</title>
 </head>
 <style>
-    @import url(https://fonts.googleapis.com/css?family=Exo:100,200,400);
+        @import url(https://fonts.googleapis.com/css?family=Exo:100,200,400);
 @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:700,400,300);
 
 body{
@@ -26,28 +26,14 @@ body{
 	bottom: 0px;
 	width: auto;
 	height: auto;
-	background-image: url(https://images.pexels.com/photos/547114/pexels-photo-547114.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);
+	background-image: url(https://images.pexels.com/photos/255379/pexels-photo-255379.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);
 	background-size: cover;
-	-webkit-filter: blur(2px);
 	z-index: 0;
-}
-
-.grad{
-	position: absolute;
-	top: 100%;
-	left: 100%;
-	right: 100%;
-	bottom: 100%;
-	width: auto;
-	height: auto;
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.65))); /* Chrome,Safari4+ */
-	z-index: 1;
-	opacity: 0.7;
 }
 
 .header{
 	position: absolute;
-	top: 50%;
+	top: 20%;
 	left: 10%;
 	z-index: 2;
 }
@@ -74,6 +60,18 @@ body{
 	z-index: 2;
 	font-family: 'Exo', sans-serif;
 	font-size: 5px;
+}
+
+.noteOne ul{
+	position: absolute;
+	top: calc(50% - 150px);
+	right: calc(50% - 300px);
+	height: 150px;
+	width: 500px;
+	padding: 10px;
+	z-index: 2;
+	font-family: 'Exo', sans-serif;
+	font-size: 15px;
 }
 
 .login input[type=text]{
@@ -107,7 +105,7 @@ body{
 .login input[type=submit]{
 	width: 260px;
 	height: 35px;
-	background: #bfbfbf;
+	background: transparent;
 	border: 1px solid #333333;
 	cursor: pointer;
 	border-radius: 2px;
@@ -117,6 +115,33 @@ body{
 	font-weight: 400;
 	padding: 6px;
 	margin-top: 10px;
+}
+
+.login button[type=button] {
+    width: 150px;
+	height: 35px;
+	background: transparent;
+	border: 1px solid #333333;
+	cursor: pointer;
+	border-radius: 2px;
+	color: #333333;
+	font-family: 'Exo', sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	padding: 6px;
+	margin-top: 10px;
+}
+
+.box{
+    position:absolute
+    width: 90%;
+    height: 75%;
+    margin-top: 15%;
+    margin-bottom: 10%;
+    margin-left: 5%;
+    margin-right: 5%;
+    background: #cccccc;
+    z-index: 3;
 }
 
 .login input[type=submit]:hover{
@@ -153,16 +178,19 @@ body{
 <div class="body"></div>
 <div class="grad"></div>
 <div class="header">
-    <div>Simple Accounting <span>App</span></div>
+    <div>New<span>Note</span></div>
 </div>
-<div class="login">
-    <h1 th:text="${loginInfo}"></h1>
-    <form action="/user/login" method="post" th:object="${user}">
-        <input type="text" th:field="*{login}" placeholder="Login"><br/>
-        <input type="password" th:field="*{password}" placeholder="Password"><br/>
-        <input type="submit" value="Login">
+<div class="login" style="top: 30%; left: 10%">
+    <button onclick="location.href='/'" type="button">Back to notes</button>
+</div>
+<div class="login" style="top: 20%; left: 30%;">
+    <form action="/note/create" method="post" th:object="${noteForm}" >
+        <input type="text" th:field="*{title}" placeholder="Title" style="width: 200%">
+        <input type="text" style="height: 100px; width: 200%" th:field="*{noteText}" placeholder="Text">
+        <input type="text" th:field="*{priority}" style="width: 200%" placeholder="Priority 0-9">
+        <input type="text" th:field="*{noteDate}" style="width: 200%" placeholder="Date yyyy-MM-dd">
+        <input type="submit" value="Create">
     </form>
-    <h1>New in?<span> </span><a href="/user/register">Register now!</a></h1>
 </div>
 </body>
 </html>

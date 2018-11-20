@@ -160,6 +160,7 @@ body{
     <form action="/user/register" method="post" th:object="${userForm}">
         <input type="text" th:field="*{login}" placeholder="Login"><br/>
         <input type="password" th:field="*{password}" placeholder="Password"><br/>
+        <input type="text" th:field="*{city}" placeholder="City"><br/>
         <input type="submit" value="Register">
     </form>
 </div>

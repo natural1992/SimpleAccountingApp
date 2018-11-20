@@ -31,14 +31,18 @@ public class UserService {
         return userRepository.existsByLogin(login);
     }
 
-    public void tryLogin(UserForm userForm){
+    public boolean tryLogin(UserForm userForm){
         if(userRepository.existsByLogin(userForm.getLogin())){
             UserEntity currentUser = userRepository.findUserByLogin(userForm.getLogin()).get();
 
             if(passwordHashingService.matches(userForm.getPassword(), currentUser.getPassword())){
                 userSession.setLoggedIn(true);
                 userSession.setUserEntity(currentUser);
+
+                return true;
             }
         }
+
+        return false;
     }
 }
