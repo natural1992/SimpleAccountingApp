@@ -159,13 +159,13 @@ a{
     <div>Simple Accounting <span>App</span></div>
 </div>
 <div class="login">
-    <h1 th:text="${loginInfo}"></h1>
     <form action="/user/login" method="post" th:object="${user}">
         <input type="text" th:field="*{login}" placeholder="Login"><br/>
         <input type="password" th:field="*{password}" placeholder="Password"><br/>
         <input type="submit" value="Login">
     </form>
-    <h1>New in?<span> </span><a href="/user/register">Register now!</a></h1>
+    <h1>New in?<span> </span><a href="/user/register">Register now!</a></h1><br/>
+    <h1 th:if="${loginInfo != null}">Input is incorrect, try again</h1>
 </div>
 </body>
 </html>

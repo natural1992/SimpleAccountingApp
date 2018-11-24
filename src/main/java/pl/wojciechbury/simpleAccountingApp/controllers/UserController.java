@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.wojciechbury.simpleAccountingApp.models.UserSession;
 import pl.wojciechbury.simpleAccountingApp.models.dtos.WeatherDto;
+import pl.wojciechbury.simpleAccountingApp.models.entities.UserEntity;
 import pl.wojciechbury.simpleAccountingApp.models.forms.UserForm;
 import pl.wojciechbury.simpleAccountingApp.models.services.NoteService;
 import pl.wojciechbury.simpleAccountingApp.models.services.UserService;
@@ -91,14 +92,13 @@ public class UserController {
     }
 
     @PostMapping("/user/login")
-    public String getUserLogin(Model model, @ModelAttribute UserForm userForm){
+    public String getUserLogin(Model model, @ModelAttribute("user") UserForm userForm){
         boolean didItLog = userService.tryLogin(userForm);
 
         if(didItLog){
             return "redirect:/user";
         }
-
-        model.addAttribute("loginInfo", "Login or password are incorrect");
+        model.addAttribute("loginInfo", 1);
         return "login";
     }
 
@@ -110,30 +110,35 @@ public class UserController {
     }
 
     @PostMapping("/user/configuration")
-    public String getUserConfiguration(@ModelAttribute String cityName){
-        userSession.getUserEntity().setCity(cityName);
+    public String getUserConfiguration(@ModelAttribute UserEntity userEntity){
+        userSession.getUserEntity().setCity(userEntity.getCity());
+        userService.updateUser();
 
-        return "userConfiguration";
+        return "redirect:/user/configuration";
     }
 
     @GetMapping("/user/configuration/{var}")
     public String changeUserConfiguration(@PathVariable("var") String option){
         if(option.equals("vatFalse")){
             userSession.getUserEntity().setVatPayer(false);
+            userService.updateUser();
 
-            return "redirect/user/configuration";
+            return "redirect:/user/configuration";
         }else if(option.equals("vatTrue")){
             userSession.getUserEntity().setVatPayer(true);
+            userService.updateUser();
 
-            return "redirect/user/configuration";
+            return "redirect:/user/configuration";
         }else if(option.equals("linearIncomeFalse")){
             userSession.getUserEntity().setLinearIncomeTaxPayer(false);
+            userService.updateUser();
 
-            return "redirect/user/configuration";
+            return "redirect:/user/configuration";
         }else if(option.equals("linearIncomeTrue")){
-            userSession.getUserEntity().setVatPayer(true);
+            userSession.getUserEntity().setLinearIncomeTaxPayer(true);
+            userService.updateUser();
 
-            return "redirect/user/configuration";
+            return "redirect:/user/configuration";
         }
 
         return "redirect:/user/configuration";

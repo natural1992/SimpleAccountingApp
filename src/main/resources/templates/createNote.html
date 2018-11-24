@@ -88,6 +88,20 @@ body{
 	margin-top: 10px;
 }
 
+.login textarea{
+	width: 250px;
+	height: 30px;
+	background: transparent;
+	border: 1px solid #333333;
+	border-radius: 2px;
+	color: #333333;
+    font-family: 'Exo', sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	padding: 4px;
+	margin-top: 10px;
+}
+
 .login input[type=password]{
 	width: 250px;
 	height: 30px;
@@ -184,9 +198,9 @@ body{
     <button onclick="location.href='/user'" type="button">Back to notes</button>
 </div>
 <div class="login" style="top: 20%; left: 30%;">
-    <form action="/note/create" method="post" th:object="${noteForm}" >
+    <form action="/note/create" method="post" th:object="${noteForm}" style="height: 100%">
         <input type="text" th:field="*{title}" placeholder="Title" style="width: 200%">
-        <input type="text" style="height: 100px; width: 200%" th:field="*{noteText}" placeholder="Text">
+        <textarea th:field="*{noteText}" class="form-control" rows="3" placeholder="Text" style="width: 200%; height: 200%"></textarea>
         <input type="text" th:field="*{priority}" style="width: 200%" placeholder="Priority 0-9">
         <input type="text" th:field="*{noteDate}" style="width: 200%" placeholder="Date yyyy-MM-dd">
         <input type="submit" value="Create">

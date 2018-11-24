@@ -34,6 +34,6 @@ public class NoteController {
         }
         noteService.addNote(noteForm);
 
-        return "redirect:/";
+        return "redirect:/user";
     }
 }

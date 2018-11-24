@@ -176,13 +176,13 @@ body{
 </style>
 <body>
 <div class="body"></div>
-<div class="header">
+<div class="header" style="font-size: 150%; top: 15%; left: left: 15%">
     <div>Welcome <span th:text="${login}"></span></div>
 </div>
 <div th:if="${isCityCorrect}" class="header" style="top: 33%; left: 22%">
-    <div th:text="${city}" style="font-size: 40px"></div><br/>
-    <div style="color: #e6e600; font-size: 30px" th:text="${'    ' + weather + '°C'}"></div><br/>
-    <div style="font-size: 25px;" th:text="${'cloud level: ' + clouds + '%'}"></div><br/>
+    <div th:text="${city}" style="font-size: 40px"></div><br>
+    <div style="color: #e6e600; font-size: 50px" th:text="${'    ' + weather + '°C'}"></div><br>
+    <div style="font-size: 25px;" th:text="${'cloud level: ' + clouds + '%'}"></div><br>
     <div style="font-size: 25px;" th:text="${date}"></div>
 </div>
 <div th:if="${!isCityCorrect}" class="header" style="top: 33%; left: 22%">
@@ -194,14 +194,18 @@ body{
 <div class="login" style="top: 40%; left: 9%;">
     <button onclick="location.href='/note/create'" type="button" style="height: 40%;">Create new note</button>
 </div>
-<div class="login" style="top: 80%; left: 9%;">
+<div class="login" style="top: 50%; left: 9%;">
+    <button onclick="location.href='/transfer'" type="button" style="height: 40%;">Accounting</button>
+</div>
+<div class="login" style="top: 80%; left: 9%; height: auto;">
     <button onclick="location.href='/user/logout'" type="button" style="height: 40%;">Logout</button>
 </div>
 <div class="noteOne">
-    <ul>
-        <li th:each="note : ${notes}">
-            <strong th:text="${note.getTitle()}"></strong><br/>
-            <span th:text="${note.getText()}" ></span>
+    <ul style="left: 50%; top: 35%; width: 35%; height: auto; color: #333333; font-size: 20px;">
+        Notes for <span style="color: #e6e600;">today:</span>
+        <li th:each="note : ${notes}" style="color: #e6e600; margin-top: 5%;">
+            <strong th:text="${note.getTitle()}" style="color: #333333;"></strong><br>
+            <span th:text="${note.getText()}" style="color: #333333;"></span>
         </li>
     </ul>
 </div>
