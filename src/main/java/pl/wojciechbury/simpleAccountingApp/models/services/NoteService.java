@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.wojciechbury.simpleAccountingApp.models.UserSession;
 import pl.wojciechbury.simpleAccountingApp.models.entities.NoteEntity;
+import pl.wojciechbury.simpleAccountingApp.models.entities.UserEntity;
 import pl.wojciechbury.simpleAccountingApp.models.forms.NoteForm;
 import pl.wojciechbury.simpleAccountingApp.models.repositories.NoteRepository;
 
@@ -29,8 +30,8 @@ public class NoteService {
         return dateFromUserInput;
     }
 
-    public void addNote(NoteForm noteForm) {
-        NoteEntity newNote = new NoteEntity(noteForm, userSession, convertStringToLocalDate(noteForm.getNoteDate()));
+    public void addNote(NoteForm noteForm, UserEntity userEntity) {
+        NoteEntity newNote = new NoteEntity(noteForm, userEntity, convertStringToLocalDate(noteForm.getNoteDate()));
         noteRepository.save(newNote);
     }
 
@@ -41,5 +42,9 @@ public class NoteService {
                 .collect(Collectors.toList());
 
         return notesList;
+    }
+
+    public List<NoteEntity> getListOfNotes(String login) {
+        return noteRepository.getNotesByUserLogin(login);
     }
 }

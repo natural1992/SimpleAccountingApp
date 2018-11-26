@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Get api key</title>
+</head>
+<style>
+    @import url(https://fonts.googleapis.com/css?family=Exo:100,200,400);
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:700,400,300);
+
+body{
+	margin: 0;
+	padding: 0;
+	background: #fff;
+
+	color: #fff;
+	font-family: Arial;
+	font-size: 12px;
+}
+
+.body{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	width: auto;
+	height: auto;
+	background-image: url(https://images.pexels.com/photos/255379/pexels-photo-255379.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);
+	background-size: cover;
+	z-index: 0;
+}
+
+.header{
+	position: absolute;
+	top: 20%;
+	left: 10%;
+	z-index: 2;
+}
+
+.header div{
+	float: left;
+	color: #333333;
+	font-family: 'Exo', sans-serif;
+	font-size: 500%;
+	font-weight: 250;
+}
+
+.header div span{
+	color: #e6e600 !important;
+}
+
+.login{
+	position: absolute;
+	top: 55%;
+	left: 60%;
+	height: 150px;
+	width: 350px;
+	padding: 10px;
+	z-index: 2;
+	font-family: 'Exo', sans-serif;
+	font-size: 5px;
+}
+
+.login button[type=button] {
+    width: 150px;
+	height: 35px;
+	background: transparent;
+	border: 1px solid #333333;
+	cursor: pointer;
+	border-radius: 2px;
+	color: #333333;
+	font-family: 'Exo', sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	padding: 6px;
+	margin-top: 10px;
+}
+</style>
+<body>
+<div class="body"></div>
+<div class="header" style="font-size: 100%; top: 15%;">
+    <div>Get your <span >Api</span> key</div>
+</div>
+<div class="login" style="top: 30%; left: 9%;">
+    <button onclick="location.href='/user/'" type="button" style="height: 40%;">Back</button>
+</div>
+<div class="login" style="top: 30%; left: 19%;">
+    <button onclick="location.href='/api/key/get'" type="button" style="height: 40%;">Generate key</button>
+</div>
+<div class="header" th:if="${key != null}" style="font-size: 50%; top: 30%; left: 35%;">
+    <div>Your new api <span>key:</span></div>
+    <div th:text="${key}"></div>
+</div>
+</body>
+</html>

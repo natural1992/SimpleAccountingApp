@@ -251,10 +251,13 @@ body{
 </div>
 <div class="login" style="position: absolute; top: 30%; left: 22%; width: 200px; height: 300px; color: #333333; font-size: 18px;">
     <p th:text="'Income tax: ' + ${incomeTax}"></p>
-    <p th:if="${economicParameters.get('vatReturn') >= 0}" th:text="'Vat return: ' + ${economicParameters.get('vatReturn')}"></p>
-    <p th:if="${economicParameters.get('vatReturn') < 0}" th:text="'Vat to pay: ' + ${-1 * economicParameters.get('vatReturn')}") style="color: red;"></p>
     <p th:text="'Biggest cost: ' + ${economicParameters.get('biggestCost')}"></p>
     <p th:text="'Biggest income: ' + ${economicParameters.get('biggestIncome')}"></p>
+    <div th:if="${isVatPayer}">
+        <p th:if="${economicParameters.get('vatReturn') >= 0}" th:text="'Vat return: ' + ${economicParameters.get('vatReturn')}"></p>
+        <p th:if="${economicParameters.get('vatReturn') < 0}" th:text="'Vat to pay: ' + ${-1 * economicParameters.get('vatReturn')}") style="color: red;"></p>
+    </div>
+
 </div>
 </body>
 </html>

@@ -5,10 +5,7 @@ import lombok.NoArgsConstructor;
 import pl.wojciechbury.simpleAccountingApp.models.UserSession;
 import pl.wojciechbury.simpleAccountingApp.models.forms.NoteForm;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -20,13 +17,14 @@ public class NoteEntity {
     @GeneratedValue
     @Id
     private int id;
-
-    private int user_id, priority;
+    @Column(name = "user_id")
+    private int userId;
+    private int priority;
     private String title, text;
     private LocalDate noteDate;
 
-    public NoteEntity(NoteForm noteForm, UserSession userSession, LocalDate noteDate) {
-        this.user_id = userSession.getUserEntity().getId();
+    public NoteEntity(NoteForm noteForm, UserEntity userEntity, LocalDate noteDate) {
+        this.userId = userEntity.getId();
         this.priority = Integer.valueOf(noteForm.getPriority());
         this.title = noteForm.getTitle();
         this.text = noteForm.getNoteText();

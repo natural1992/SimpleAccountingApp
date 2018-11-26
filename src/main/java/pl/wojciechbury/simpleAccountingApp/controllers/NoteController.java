@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import pl.wojciechbury.simpleAccountingApp.models.UserSession;
 import pl.wojciechbury.simpleAccountingApp.models.forms.NoteForm;
 import pl.wojciechbury.simpleAccountingApp.models.services.NoteService;
 
@@ -14,10 +15,12 @@ import pl.wojciechbury.simpleAccountingApp.models.services.NoteService;
 public class NoteController {
 
     final NoteService noteService;
+    final UserSession userSession;
 
     @Autowired
-    public NoteController(NoteService noteService){
+    public NoteController(NoteService noteService, UserSession userSession){
         this.noteService = noteService;
+        this.userSession = userSession;
     }
 
     @GetMapping("/note/create")
@@ -32,7 +35,7 @@ public class NoteController {
         if(bindingResult.hasErrors()){
             model.addAttribute("noteInfo", "date or priority is incorrect");
         }
-        noteService.addNote(noteForm);
+        noteService.addNote(noteForm, userSession.getUserEntity());
 
         return "redirect:/user";
     }

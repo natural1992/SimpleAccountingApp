@@ -49,4 +49,8 @@ public class UserService {
     public void updateUser() {
         userRepository.save(userSession.getUserEntity());
     }
+
+    public UserEntity getUserByLogin(String login){
+        return userRepository.findUserByLogin(login).get();
+    }
 }

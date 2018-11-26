@@ -1,9 +1,9 @@
 package pl.wojciechbury.simpleAccountingApp.models;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import pl.wojciechbury.simpleAccountingApp.models.services.ApiService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,14 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
     final UserSession userSession;
-    public static final String PASSWORD_HEADER_API = "api-password";
-
-    @Value("${own.api.key}")
-    String ourApiKey;
+    final ApiService apiService;
+    public static final String PASSWORD_HEADER_API = "api-key";
 
     @Autowired
-    public LoginInterceptor(UserSession userSession){
+    public LoginInterceptor(UserSession userSession, ApiService apiService){
         this.userSession = userSession;
+        this.apiService = apiService;
     }
 
     @Override
@@ -29,14 +28,16 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
             return super.preHandle(request, response, handler);
         }
         if(request.getRequestURI().contains("api")){
-            String passwordApi = request.getHeader(PASSWORD_HEADER_API);
+            String apiKey = request.getHeader(PASSWORD_HEADER_API);
 
-            if(passwordApi == null || !passwordApi.equals(ourApiKey)){
-                response.sendError(403, "Bad api key");
+            if(!(apiKey == null) && apiService.checkKey(apiKey) &&
+                    request.getRequestURI().contains(apiService.getLoginByApiKey(apiKey))){
 
-                return false;
+                return super.preHandle(request, response, handler);
             }
-            return super.preHandle(request, response, handler);
+            response.sendError(403, "Bad api key");
+
+            return false;
         }
 
         response.sendRedirect("/user/login");

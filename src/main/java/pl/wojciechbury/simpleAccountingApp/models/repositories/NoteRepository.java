@@ -14,4 +14,6 @@ public interface NoteRepository extends CrudRepository<NoteEntity, Integer> {
     @Query(nativeQuery = true, value = "SELECT text, title, priority, note.id, user_id, note_date FROM note JOIN user ON note.user_id = user.id WHERE login = ?1 AND note_date = ?2")
     List<NoteEntity> noteListForToday(String login, LocalDate currentDate);
 
+    @Query(nativeQuery = true, value = "SELECT * FROM note JOIN user ON note.user_id = user.id WHERE login = ?1")
+    List<NoteEntity> getNotesByUserLogin(String login);
 }

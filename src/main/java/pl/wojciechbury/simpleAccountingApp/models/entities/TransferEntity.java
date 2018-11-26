@@ -19,7 +19,7 @@ public class TransferEntity {
     @GeneratedValue
     @Id
     private int id;
-    @Column(name = "user_id")
+    @Column(name = "userId")
     private int userId;
     @Column(name = "type")
     @Enumerated(EnumType.STRING)

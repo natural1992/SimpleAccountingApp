@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import pl.wojciechbury.simpleAccountingApp.models.UserSession;
 import pl.wojciechbury.simpleAccountingApp.models.entities.TransferEntity;
 import pl.wojciechbury.simpleAccountingApp.models.forms.TransferForm;
 import pl.wojciechbury.simpleAccountingApp.models.services.TransferService;
@@ -21,10 +22,12 @@ import static java.time.temporal.TemporalAdjusters.*;
 public class TransferController {
 
     final TransferService transferService;
+    final UserSession userSession;
 
     @Autowired
-    public TransferController(TransferService transferService){
+    public TransferController(TransferService transferService, UserSession userSession){
         this.transferService = transferService;
+        this.userSession = userSession;
     }
 
     @GetMapping("/")
@@ -35,6 +38,7 @@ public class TransferController {
     @GetMapping("/transfer/day/{page}")
     public String showTransferScreenDayPage(Model model, @PathVariable("page") int page){
         model.addAttribute("transferList", transferService.loadPageForUserThisDay(page));
+        model.addAttribute("isVatPayer",userSession.getUserEntity().isVatPayer());
         model.addAttribute("economicParameters", transferService.loadEconomicParametersForGivenTime(
                 LocalDate.now(),
                 LocalDate.now().plusDays(1)));
@@ -48,6 +52,7 @@ public class TransferController {
     @GetMapping("/transfer/month/{page}")
     public String showTransferScreenMonthPage(Model model, @PathVariable("page") int page){
         model.addAttribute("transferList", transferService.loadPageForUserThisMonth(page));
+        model.addAttribute("isVatPayer",userSession.getUserEntity().isVatPayer());
         model.addAttribute("economicParameters", transferService.loadEconomicParametersForGivenTime(
                 LocalDate.now().with(firstDayOfMonth()),
                 LocalDate.now().plusDays(1)));
@@ -61,6 +66,7 @@ public class TransferController {
     @GetMapping("/transfer/year/{page}")
     public String showTransferScreenYearPage(Model model, @PathVariable("page") int page){
         model.addAttribute("transferList", transferService.loadPageForUserThisYear(page));
+        model.addAttribute("isVatPayer",userSession.getUserEntity().isVatPayer());
         model.addAttribute("economicParameters", transferService.loadEconomicParametersForGivenTime(
                 LocalDate.now().with(firstDayOfYear()),
                 LocalDate.now().plusDays(1)));

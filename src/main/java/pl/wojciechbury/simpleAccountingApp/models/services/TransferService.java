@@ -84,9 +84,9 @@ public class TransferService {
         }
         Map<String, Double> result = new HashMap<>();
         {
-            result.put("biggestCost", maxCost);
-            result.put("biggestIncome", maxIncome);
-            result.put("vatReturn", vatReturn);
+            result.put("biggestCost", (double) Math.round(maxCost * 100) / 100 );
+            result.put("biggestIncome", (double) Math.round(maxIncome * 100) / 100);
+            result.put("vatReturn", (double) Math.round(vatReturn * 100) / 100);
         }
         return result;
     }
@@ -110,7 +110,7 @@ public class TransferService {
         }else {
             incomeTax = (Math.min(incomeTax, 85528) - 556.02) * 0.18 + Math.max(0, incomeTax - 85528) * 0.32;
         }
-        return incomeTax;
+        return (double) Math.round(incomeTax * 100) / 100;
     }
 
     public double getIncomeTaxForGivenTime(LocalDate startDate, LocalDate endDate){

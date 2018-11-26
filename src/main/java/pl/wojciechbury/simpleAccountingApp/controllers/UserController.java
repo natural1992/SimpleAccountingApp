@@ -18,6 +18,7 @@ import pl.wojciechbury.simpleAccountingApp.models.services.WeatherService;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Controller
 public class UserController {
