@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Transfer Screen</title>
+</head>
+<style>
+        @import url(https://fonts.googleapis.com/css?family=Exo:100,200,400);
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:700,400,300);
+
+body{
+	margin: 0;
+	padding: 0;
+	background: #fff;
+
+	color: #fff;
+	font-family: Arial;
+	font-size: 12px;
+}
+
+.body{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	width: auto;
+	height: auto;
+	background-image: url(https://images.pexels.com/photos/255379/pexels-photo-255379.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);
+	background-size: cover;
+	z-index: 0;
+}
+
+.header{
+	position: absolute;
+	z-index: 2;
+}
+
+.header div{
+	float: left;
+	color: #333333;
+	font-family: 'Exo', sans-serif;
+	font-size: 500%;
+	font-weight: 250;
+}
+
+.header div span{
+	color: #e6e600 !important;
+}
+
+.login{
+	position: absolute;
+	height: 150px;
+	width: 350px;
+	padding: 10px;
+	z-index: 2;
+	font-family: 'Exo', sans-serif;
+	font-size: 5px;
+}
+
+.noteOne ul{
+	position: absolute;
+	height: 150px;
+	width: 500px;
+	padding: 10px;
+	z-index: 2;
+	font-family: 'Exo', sans-serif;
+	font-size: 15px;
+}
+
+.login input[type=text]{
+	width: 250px;
+	height: 30px;
+	background: transparent;
+	border: 1px solid #333333;
+	border-radius: 2px;
+	color: #333333;
+    font-family: 'Exo', sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	padding: 4px;
+	margin-top: 10px;
+}
+
+.login input[type=password]{
+	width: 250px;
+	height: 30px;
+	background: transparent;
+	border: 1px solid #333333;
+	border-radius: 2px;
+	color: #333333;
+	font-family: 'Exo', sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	padding: 4px;
+	margin-top: 10px;
+}
+
+.login input[type=submit]{
+	width: 260px;
+	height: 35px;
+	background: #bfbfbf;
+	border: 1px solid #333333;
+	cursor: pointer;
+	border-radius: 2px;
+	color: #333333;
+	font-family: 'Exo', sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	padding: 6px;
+	margin-top: 10px;
+}
+
+.login button[type=button] {
+    width: 150px;
+	height: 35px;
+	background: transparent;
+	border: 1px solid #333333;
+	cursor: pointer;
+	border-radius: 2px;
+	color: #333333;
+	font-family: 'Exo', sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	padding: 6px;
+	margin-top: 10px;
+}
+
+.login a{
+    border: 1px solid #333333;
+    border-radius: 2px;
+    cursor: pointer;
+    color: #333333;
+    font-family: 'Exo', sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	padding: 6px;
+	margin-top: 10px;
+}
+
+.box{
+    position:absolute
+    width: 90%;
+    height: 75%;
+    margin-top: 15%;
+    margin-bottom: 10%;
+    margin-left: 5%;
+    margin-right: 5%;
+    background: #cccccc;
+    z-index: 3;
+}
+
+.login input[type=submit]:hover{
+	opacity: 0.8;
+}
+
+.login input[type=submit]:active{
+	opacity: 0.6;
+}
+
+.login input[type=text]:focus{
+	outline: none;
+	border: 1px solid rgba(255,255,255,0.9);
+}
+
+.login input[type=password]:focus{
+	outline: none;
+	border: 1px solid rgba(255,255,255,0.9);
+}
+
+.login input[type=submit]:focus{
+	outline: none;
+}
+
+::-webkit-input-placeholder{
+   color: rgba(255,255,255,0.6);
+}
+
+::-moz-input-placeholder{
+   color: rgba(255,255,255,0.6);
+}
+
+.pagination {
+    display: inline-block;
+}
+
+.login table {
+    position: absolute;
+    background: transparent;
+	border: 0px solid #333333;
+    border-collapse: collapse;
+	color: #333333;
+	font-family: 'Exo', sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	padding: 6px;
+	margin-top: 10px;
+}
+
+.login table td,th{
+    border: opx solid #333333;
+}
+</style>
+<body>
+<div class="body"></div>
+<div class="header" style="font-size: 100%; top: 15%; left: 15%">
+    <div>Accounting <span>screen</span></div>
+</div>
+<div class="login" style="top: 30%; left: 10%">
+    <button onclick="location.href='/transfer/add'" type="button">Add new transfer</button>
+</div>
+<div class="login" style="top: 35%; left: 10%">
+    <button onclick="location.href='/transfer/day/0'" type="button">Day</button>
+</div>
+<div class="login" style="top: 40%; left: 10%">
+    <button onclick="location.href='/transfer/month/0'" type="button">Month</button>
+</div>
+<div class="login" style="top: 45%; left: 10%">
+    <button onclick="location.href='/transfer/year/0'" type="button">Year</button>
+</div>
+<div class="login" style="top: 80%; left: 10%">
+    <button onclick="location.href='/user'" type="button" style="height: 20%;">Back</button>
+</div>
+<div class="login" style="top: 90%; left: 45%">
+    <a th:if="${transferList.hasPrevious()}" class="page-link" th:href="'/transfer/year/' + ${transferList.getNumber() - 1}">&larr; Older</a>
+</div>
+<div class="login" style="top: 90%; left: 55%">
+    <a th:if="${transferList.hasNext()}" class="page-link" th:href="'/transfer/year/' + ${transferList.getNumber() + 1}">Newer &rarr;</a>
+</div>
+<div class="login" style="text-align: center; top:30%; left: 35%; font-weight: 200">
+    <table border="1" style="margin: auto; width: 600px">
+        <tr>
+            <th style="border: 0px solid black;">Id</th>
+            <th style="border: 0px solid black;">Transfer Type</th>
+            <th style="border: 0px solid black;">Title</th>
+            <th style="border: 0px solid black;">Category</th>
+            <th style="border: 0px solid black;">Amount</th>
+            <th style="border: 0px solid black;">Vat rate</th>
+            <th style="border: 0px solid black;">Date</th>
+        </tr>
+        <tr th:each="transfer : ${transferList.getContent()}">
+            <td th:text="${transfer.getId()}"></td>
+            <td th:text="${transfer.getTransferType().name()}"></td>
+            <td th:text="${transfer.getTitle()}"></td>
+            <td th:text="${transfer.getCategory()}"></td>
+            <td th:text="${transfer.getAmount()}"></td>
+            <td th:text="${transfer.getVatRate()}"></td>
+            <td th:text="${transfer.getDate()}"></td>
+        </tr>
+    </table>
+</div>
+<div class="login" style="position: absolute; top: 30%; left: 22%; width: 200px; height: 300px; color: #333333; font-size: 18px;">
+    <p th:text="'Income tax: ' + ${incomeTax}"></p>
+    <p th:if="${economicParameters.get('vatReturn') >= 0}" th:text="'Vat return: ' + ${economicParameters.get('vatReturn')}"></p>
+    <p th:if="${economicParameters.get('vatReturn') < 0}" th:text="'Vat to pay: ' + ${-1 * economicParameters.get('vatReturn')}") style="color: red;"></p>
+    <p th:text="'Biggest cost: ' + ${economicParameters.get('biggestCost')}"></p>
+    <p th:text="'Biggest income: ' + ${economicParameters.get('biggestIncome')}"></p>
+</div>
+</body>
+</html>

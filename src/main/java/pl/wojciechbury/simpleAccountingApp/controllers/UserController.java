@@ -76,13 +76,11 @@ public class UserController {
 
         if(!isSuchLogin){
             userService.addUser(userForm);
-            userService.tryLogin(userForm);
-
-            return "redirect:/user";
         }else{
             model.addAttribute("registrationInfo", "This login is already taken");
             return "registration";
         }
+        return "redirect:/user/login";
     }
 
     @GetMapping("/user/login")
